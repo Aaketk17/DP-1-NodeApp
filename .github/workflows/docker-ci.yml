@@ -35,7 +35,7 @@ jobs:
           PORT: ${{ inputs.port }}
           TABLE: ${{ inputs.table }}
         run: |
-          IMAGE_TAG=$${{ inputs.build_id }}
+          IMAGE_TAG=${{ inputs.build_id }}
           docker build --build-arg table=$TABLE --build-arg port=$PORT -t dpnodeapp:$IMAGE_TAG .
       - name: Push to DockerHub
         env:
