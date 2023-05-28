@@ -41,5 +41,6 @@ jobs:
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
         run: |
+          IMAGE_TAG=${{ inputs.build_id }}
           docker tag dpnodeapp:$IMAGE_TAG $DOCKER_USER/dp-repository:$IMAGE_TAG
           docker push $DOCKER_USER/dp-repository:$IMAGE_TAG
