@@ -36,10 +36,10 @@ jobs:
           TABLE: ${{ inputs.table }}
         run: |
           IMAGE_TAG=$${{ inputs.build_id }}
-          docker build --build-arg table=$ENV_VAR port=$port -t dp-1-nodeapp:$IMAGE_TAG .
+          docker build --build-arg table=$ENV_VAR port=$port -t dpnodeapp:$IMAGE_TAG .
       - name: Push to DockerHub
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
         run: |
-          docker tag dp-1-nodeapp:$IMAGE_TAG $DOCKER_USER/dp-repository:$IMAGE_TAG
+          docker tag dpnodeapp:$IMAGE_TAG $DOCKER_USER/dp-repository:$IMAGE_TAG
           docker push $DOCKER_USER/dp-repository:$IMAGE_TAG
