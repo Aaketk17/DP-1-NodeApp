@@ -17,6 +17,9 @@ on:
       table:
         required: true
         type: string
+      region:
+        required: true
+        type: string
 
 jobs:
   docker:
@@ -34,9 +37,12 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
           PORT: ${{ inputs.port }}
           TABLE: ${{ inputs.table }}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_REGION: ${{inputs.AWS_REGION}}
         run: |
           IMAGE_TAG=${{ inputs.build_id }}
-          docker build --build-arg table=$TABLE --build-arg port=$PORT -t dpnodeapp:$IMAGE_TAG .
+          docker build --build-arg table=$TABLE --build-arg port=$PORT AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --build-arg AWS_REGION=$AWS_REGION -t dpnodeapp:$IMAGE_TAG .
       - name: Push to DockerHub
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
